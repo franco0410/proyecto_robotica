@@ -1,0 +1,29 @@
+#include <Servo.h>   // Librería correcta
+
+Servo miServo;       // Declaración del objeto servo
+char estado; // Variable para controlar el estado
+int salida = 5;
+const int IN2 = 5;   // Dirección (LOW)
+const int IN3 = 4;   // Dirección (HIGH)
+void setup() {
+  Serial.begin(9600);
+  miServo.attach(9);
+ 
+}
+
+void loop() {
+  analogWrite(IN1, 200);    // Velocidad baja constante
+  digitalWrite(IN2, LOW);    
+  digitalWrite(IN3, HIGH);
+ 
+  analogWrite(salida,100);
+  if(Serial.available() > 0){
+    estado = Serial.read();
+    if (estado == 'T'){
+      miServo.write(90);    
+    }
+    if (estado == 'F'){
+      miServo.write(15);
+    }
+  }
+}
